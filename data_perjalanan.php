@@ -103,7 +103,7 @@
         echo "<div class='input-group-append'>";
         echo "<button class='btn btn-primary' type='submit'>Search</button>";
         echo "<button class='btn btn-danger ml-1' type='reset' onclick='window.location.href=\"index.php\"'>Reset</button>";
-        echo "<a class='btn btn-success ml-1' href='download.php?search=$search_query'>Download Excel</a>";
+        echo "<a class='btn btn-success ml-1' href='download.php?search=$search_query'>Download PDF</a>";
         echo "</div>";
         echo "</div>";
         echo "</form>";

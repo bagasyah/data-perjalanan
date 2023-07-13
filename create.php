@@ -188,7 +188,7 @@
             </div>
             <div class="form-group">
                 <label for="foto">Foto KM Awal:</label>
-                <input type="file" id="foto" name="foto">
+                <input type="file" id="foto" name="foto" required>
             </div>
             <div class="form-group">
                 <label for="foto2">Foto KM Akhir:</label>

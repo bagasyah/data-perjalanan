@@ -29,14 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $air_weaper = $_POST['air_weaper'];
     $air_radiator = $_POST['air_radiator'];
     $note = $_POST['note'];
-    $foto1 = $_FILES['foto']['name'];
-    $foto1_tmp = $_FILES['foto']['tmp_name'];
-    $foto1_path = 'uploads/' . $foto1;
-    $foto2 = $_FILES['foto2']['name'];
-    $foto2_tmp = $_FILES['foto2']['tmp_name'];
-    $foto2_path = 'uploads/' . $foto2;
+    $foto1 = isset($_FILES['foto']['name']) ? $_FILES['foto']['name'] : '';
+    $foto1_tmp = isset($_FILES['foto']['tmp_name']) ? $_FILES['foto']['tmp_name'] : '';
+    $foto1_path = !empty($foto1) ? 'uploads/' . $foto1 : '';
+    $foto2 = isset($_FILES['foto2']['name']) ? $_FILES['foto2']['name'] : '';
+    $foto2_tmp = isset($_FILES['foto2']['tmp_name']) ? $_FILES['foto2']['tmp_name'] : '';
+    $foto2_path = !empty($foto2) ? 'uploads/' . $foto2 : '';
 
-    if (move_uploaded_file($foto1_tmp, $foto1_path) && move_uploaded_file($foto2_tmp, $foto2_path)) {
+    if ((!empty($foto1) && move_uploaded_file($foto1_tmp, $foto1_path)) || (!empty($foto2) && move_uploaded_file($foto2_tmp, $foto2_path))) {
         $query = "INSERT INTO laporan (user_id, status_lap, tanggal, alamat_awal, alamat_tujuan, km_awal, km_akhir, no_polisi, tipe_mobil, lampu_depan, lampu_sen_depan, lampu_sen_belakang, lampu_rem, lampu_mundur, bodi, ban, pedal, kopling, gas_rem, oli_mesin, klakson, weaper, air_weaper, air_radiator, note, foto, foto2) VALUES ('$user_id','pending', '$tanggal', '$alamat_awal', '$alamat_tujuan', '$km_awal', '$km_akhir', '$no_polisi', '$tipe_mobil', '$lampu_depan', '$lampu_sen_depan', '$lampu_sen_belakang', '$lampu_rem', '$lampu_mundur', '$bodi', '$ban', '$pedal', '$kopling', '$gas_rem', '$oli_mesin', '$klakson', '$weaper', '$air_weaper', '$air_radiator', '$note', '$foto1', '$foto2')";
         if ($conn->query($query) === TRUE) {
             header("Location: dashboard.php");
