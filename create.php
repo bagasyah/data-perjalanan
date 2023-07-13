@@ -66,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label for="km_akhir">KM Akhir:</label>
-                <input type="number" class="form-control" id="km_akhir" name="km_akhir" required>
+                <input type="number" class="form-control" id="km_akhir" name="km_akhir">
             </div>
             <div class="form-group">
                 <label for="no_polisi">No Polisi:</label>
