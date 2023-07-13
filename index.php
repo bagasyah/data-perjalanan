@@ -111,7 +111,7 @@
         echo "<div class='input-group-append'>";
         echo "<button class='btn btn-primary' type='submit'>Search</button>";
         echo "<button class='btn btn-danger ml-1' type='reset' onclick='window.location.href=\"index.php\"'>Reset</button>";
-        echo "<a class='btn btn-success ml-1' href='download.php?search=$search_query'>Download Excel</a>";
+        echo "<a class='btn btn-success ml-1' href='download.php?search=$search_query'>Download PDF</a>";
         echo "</div>";
         echo "</div>";
         echo "</form>";
@@ -132,7 +132,8 @@
             echo "<th>No Polisi</th>";
             echo "<th>Tipe Mobil</th>";
             echo "<th>Status</th>";
-            echo "<th>Foto</th>";
+            echo "<th>Foto KM Awal</th>";
+            echo "<th>Foto KM Akhir</th>";
             echo "<th></th>"; // Kolom tambahan untuk tombol detail
             echo "</tr>";
             echo "</thead>";
@@ -150,25 +151,24 @@
                 echo "<td>" . $row['no_polisi'] . "</td>";
                 echo "<td>" . $row['tipe_mobil'] . "</td>";
                 echo "<td>" . $row['status_lap'] . "</td>";
-                echo "<td><img src='uploads/" . $row['foto'] . "' width='100'></td>";
+                echo "<td><a href='#' data-toggle='modal' data-target='#fotoModal' data-foto='uploads/" . $row['foto'] . "'><img src='uploads/" . $row['foto'] . "' width='100'></a></td>";
+                echo "<td><a href='#' data-toggle='modal' data-target='#fotoModal' data-foto='uploads/" . $row['foto2'] . "'><img src='uploads/" . $row['foto2'] . "' width='100'></a></td>";
                 echo "</tr>"; // Tutup baris data saat ini
                 echo "<tr>"; // Baris baru untuk menu detail
                 echo "<td colspan='11'>"; // Menggabungkan sel menjadi 1 kolom
                 echo "<details>";
                 echo "<summary><i class='fas fa-search'></i> Detail</summary>";
                 echo "<div class='details-content'>";
-                echo "<h5>Navigasi</h5>";
                 echo "<p>Lampu Depan: " . $row['lampu_depan'] . "</p>";
                 echo "<p>Lampu Sen Depan: " . $row['lampu_sen_depan'] . "</p>";
                 echo "<p>Lampu Sen Belakang: " . $row['lampu_sen_belakang'] . "</p>";
                 echo "<p>Lampu Rem: " . $row['lampu_rem'] . "</p>";
                 echo "<p>Lampu Mundur: " . $row['lampu_mundur'] . "</p>";
-                echo "<h5>Bagian Mobil</h5>";
                 echo "<p>Bodi: " . $row['bodi'] . "</p>";
                 echo "<p>Ban: " . $row['ban'] . "</p>";
-                echo "<p>Pedal: " . $row['pedal'] . "</p>";
-                echo "<p>Kopling: " . $row['kopling'] . "</p>";
-                echo "<p>Gas Rem: " . $row['gas_rem'] . "</p>";
+                echo "<p>Pedal Gas: " . $row['pedal'] . "</p>";
+                echo "<p>Pedal Kopling: " . $row['kopling'] . "</p>";
+                echo "<p>Pedal Rem: " . $row['gas_rem'] . "</p>";
                 echo "<p>Klakson: " . $row['klakson'] . "</p>";
                 echo "<p>Weaper: " . $row['weaper'] . "</p>";
                 echo "<p>Air Weaper: " . $row['air_weaper'] . "</p>";
@@ -189,9 +189,30 @@
         ?>
 
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="fotoModal" tabindex="-1" role="dialog" aria-labelledby="fotoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="" class="img-fluid" id="modalFoto">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('#fotoModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var foto = button.data('foto');
+            var modal = $(this);
+            modal.find('.modal-body #modalFoto').attr('src', foto);
+        });
+    </script>
 </body>
 
 </html>

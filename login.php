@@ -30,7 +30,7 @@ if (isset($_POST['login'])) {
     <title>Login - Nama Aplikasi Anda</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/login.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             padding-top: 40px;
@@ -133,7 +133,7 @@ if (isset($_POST['login'])) {
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
+            <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         <div class="header-content ">
@@ -145,10 +145,11 @@ if (isset($_POST['login'])) {
                     </div>
                     <h2 class="text-center mt-3">LOGIN</h2>
                     <div class="card-body">
-                        <div class="alert alert-danger<?php if (!isset($errorMessage))
-                            echo ' d-none'; ?>">
-                            <?php echo $errorMessage; ?>
-                        </div>
+                        <?php if (isset($errorMessage)): ?>
+                            <div class="alert alert-danger">
+                                <?php echo $errorMessage; ?>
+                            </div>
+                        <?php endif; ?>
                         <form method="POST" action="login.php">
                             <div class="form-group">
                                 <label for="username">Username:</label>

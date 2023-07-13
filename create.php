@@ -76,7 +76,6 @@
                 <label for="tipe_mobil">Tipe Mobil:</label>
                 <input type="text" class="form-control" id="tipe_mobil" name="tipe_mobil" required>
             </div>
-            <h2>Navigasi</h2>
             <div class="form-group">
                 <label for="lampu_depan">Lampu Depan:</label><br>
                 <input type="radio" id="lampu_depan_berfungsi" name="lampu_depan" value="berfungsi" required>
@@ -113,7 +112,6 @@
                 <input type="radio" id="lampu_mundur_rusak" name="lampu_mundur" value="rusak" required>
                 <label for="lampu_mundur_rusak">Rusak</label>
             </div>
-            <h2>Bagian Mobil</h2>
             <div class="form-group">
                 <label for="bodi">Bodi:</label><br>
                 <input type="radio" id="bodi_baik" name="bodi" value="baik" required>
@@ -129,21 +127,21 @@
                 <label for="ban_rusak">Rusak</label>
             </div>
             <div class="form-group">
-                <label for="pedal">Pedal:</label><br>
+                <label for="pedal">Pedal Gas:</label><br>
                 <input type="radio" id="pedal_berfungsi" name="pedal" value="berfungsi" required>
                 <label for="pedal_berfungsi">Berfungsi</label>
                 <input type="radio" id="pedal_rusak" name="pedal" value="rusak" required>
                 <label for="pedal_rusak">Rusak</label>
             </div>
             <div class="form-group">
-                <label for="kopling">Kopling:</label><br>
+                <label for="kopling">Pedal Kopling:</label><br>
                 <input type="radio" id="kopling_berfungsi" name="kopling" value="berfungsi" required>
                 <label for="kopling_berfungsi">Berfungsi</label>
                 <input type="radio" id="kopling_rusak" name="kopling" value="rusak" required>
                 <label for="kopling_rusak">Rusak</label>
             </div>
             <div class="form-group">
-                <label for="gas_rem">Gas Rem:</label><br>
+                <label for="gas_rem">Pedal Rem:</label><br>
                 <input type="radio" id="gas_rem_berfungsi" name="gas_rem" value="berfungsi" required>
                 <label for="gas_rem_berfungsi">Berfungsi</label>
                 <input type="radio" id="gas_rem_rusak" name="gas_rem" value="rusak" required>
@@ -189,11 +187,11 @@
                 <textarea class="form-control" id="note" name="note" rows="4"></textarea>
             </div>
             <div class="form-group">
-                <label for="foto">Foto Pertama:</label>
+                <label for="foto">Foto KM Awal:</label>
                 <input type="file" id="foto" name="foto">
             </div>
             <div class="form-group">
-                <label for="foto2">Foto Kedua:</label>
+                <label for="foto2">Foto KM Akhir:</label>
                 <input type="file" id="foto2" name="foto2">
             </div>
             <div class="form-group">

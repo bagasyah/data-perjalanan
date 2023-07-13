@@ -29,13 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $air_weaper = $_POST['air_weaper'];
     $air_radiator = $_POST['air_radiator'];
     $note = $_POST['note'];
-    $foto = $_FILES['foto']['name'];
-    $foto_tmp = $_FILES['foto']['tmp_name'];
-    $foto_path = 'uploads/' . $foto;
+    $foto1 = $_FILES['foto']['name'];
+    $foto1_tmp = $_FILES['foto']['tmp_name'];
+    $foto1_path = 'uploads/' . $foto1;
+    $foto2 = $_FILES['foto2']['name'];
+    $foto2_tmp = $_FILES['foto2']['tmp_name'];
+    $foto2_path = 'uploads/' . $foto2;
 
-
-    if (move_uploaded_file($foto_tmp, $foto_path)) {
-        $query = "INSERT INTO laporan (user_id, status_lap, tanggal, alamat_awal, alamat_tujuan, km_awal, km_akhir, no_polisi, tipe_mobil, lampu_depan, lampu_sen_depan, lampu_sen_belakang, lampu_rem, lampu_mundur, bodi, ban, pedal, kopling, gas_rem, oli_mesin, klakson, weaper, air_weaper, air_radiator,note,  foto) VALUES ('$user_id','pending', '$tanggal', '$alamat_awal', '$alamat_tujuan', '$km_awal', '$km_akhir', '$no_polisi', '$tipe_mobil', '$lampu_depan', '$lampu_sen_depan', '$lampu_sen_belakang', '$lampu_rem', '$lampu_mundur', '$bodi', '$ban', '$pedal', '$kopling', '$gas_rem', '$oli_mesin', '$klakson', '$weaper', '$air_weaper', '$air_radiator', '$note', '$foto')";
+    if (move_uploaded_file($foto1_tmp, $foto1_path) && move_uploaded_file($foto2_tmp, $foto2_path)) {
+        $query = "INSERT INTO laporan (user_id, status_lap, tanggal, alamat_awal, alamat_tujuan, km_awal, km_akhir, no_polisi, tipe_mobil, lampu_depan, lampu_sen_depan, lampu_sen_belakang, lampu_rem, lampu_mundur, bodi, ban, pedal, kopling, gas_rem, oli_mesin, klakson, weaper, air_weaper, air_radiator, note, foto, foto2) VALUES ('$user_id','pending', '$tanggal', '$alamat_awal', '$alamat_tujuan', '$km_awal', '$km_akhir', '$no_polisi', '$tipe_mobil', '$lampu_depan', '$lampu_sen_depan', '$lampu_sen_belakang', '$lampu_rem', '$lampu_mundur', '$bodi', '$ban', '$pedal', '$kopling', '$gas_rem', '$oli_mesin', '$klakson', '$weaper', '$air_weaper', '$air_radiator', '$note', '$foto1', '$foto2')";
         if ($conn->query($query) === TRUE) {
             header("Location: dashboard.php");
             exit();

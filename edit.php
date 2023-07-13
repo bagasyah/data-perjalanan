@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
     $tipe_mobil = $_POST['tipe_mobil'];
     $note = $_POST['note'];
     $foto = $_FILES['foto']['name'];
+    $foto2 = $_FILES['foto2']['name'];
     $lampu_depan = '';
     $lampu_sen_depan = '';
     $lampu_sen_belakang = '';
@@ -112,15 +113,36 @@ if (isset($_POST['submit'])) {
         } else {
             echo "Failed to move uploaded file.";
         }
-    } else {
-        // No new photo uploaded, update other fields in the database
-        $query = "UPDATE laporan SET tanggal='$tanggal', alamat_awal='$alamat_awal', alamat_tujuan='$alamat_tujuan', km_awal='$km_awal', km_akhir='$km_akhir', lampu_depan='$lampu_depan', lampu_sen_depan='$lampu_sen_depan', lampu_sen_belakang='$lampu_sen_belakang', lampu_rem='$lampu_rem', lampu_mundur='$lampu_mundur', bodi='$bodi', ban='$ban', pedal='$pedal', kopling='$kopling', gas_rem='$gas_rem', oli_mesin='$oli_mesin', klakson='$klakson', weaper='$weaper', air_weaper='$air_weaper', air_radiator='$air_radiator', note='$note' WHERE id='$id'";
-        if ($conn->query($query) === TRUE) {
-            header("Location: dashboard.php");
-            exit();
+    }
+
+    // Check if a new foto2 file is uploaded
+    if (isset($_FILES['foto2']) && $_FILES['foto2']['error'] === UPLOAD_ERR_OK) {
+        $foto2 = $_FILES['foto2']['name'];
+        $foto2_tmp = $_FILES['foto2']['tmp_name'];
+        $foto2_path = 'uploads/' . $foto2;
+
+        // Move the uploaded file to the uploads folder
+        if (move_uploaded_file($foto2_tmp, $foto2_path)) {
+            // Update the foto2 in the database
+            $query = "UPDATE laporan SET tanggal='$tanggal', alamat_awal='$alamat_awal', alamat_tujuan='$alamat_tujuan', km_awal='$km_awal', km_akhir='$km_akhir', foto2='$foto2', lampu_depan='$lampu_depan', lampu_sen_depan='$lampu_sen_depan', lampu_sen_belakang='$lampu_sen_belakang', lampu_rem='$lampu_rem', lampu_mundur='$lampu_mundur', bodi='$bodi', ban='$ban', pedal='$pedal', kopling='$kopling', gas_rem='$gas_rem', oli_mesin='$oli_mesin', klakson='$klakson', weaper='$weaper', air_weaper='$air_weaper', air_radiator='$air_radiator', note='$note' WHERE id='$id'";
+            if ($conn->query($query) === TRUE) {
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                echo "Error: " . $query . "<br>" . $conn->error;
+            }
         } else {
-            echo "Error: " . $query . "<br>" . $conn->error;
+            echo "Failed to move uploaded file.";
         }
+    }
+
+    // No new photo uploaded, update other fields in the database
+    $query = "UPDATE laporan SET tanggal='$tanggal', alamat_awal='$alamat_awal', alamat_tujuan='$alamat_tujuan', km_awal='$km_awal', km_akhir='$km_akhir', lampu_depan='$lampu_depan', lampu_sen_depan='$lampu_sen_depan', lampu_sen_belakang='$lampu_sen_belakang', lampu_rem='$lampu_rem', lampu_mundur='$lampu_mundur', bodi='$bodi', ban='$ban', pedal='$pedal', kopling='$kopling', gas_rem='$gas_rem', oli_mesin='$oli_mesin', klakson='$klakson', weaper='$weaper', air_weaper='$air_weaper', air_radiator='$air_radiator', note='$note' WHERE id='$id'";
+    if ($conn->query($query) === TRUE) {
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        echo "Error: " . $query . "<br>" . $conn->error;
     }
 }
 ?>
@@ -276,7 +298,7 @@ if (isset($_POST['submit'])) {
                 <label for="ban_rusak">Rusak</label>
             </div>
             <div class="form-group">
-                <label for="pedal">Pedal:</label><br>
+                <label for="pedal">Pedal Gas:</label><br>
                 <input type="radio" id="pedal_berfungsi" name="pedal" value="berfungsi" <?php if ($row['pedal'] === 'berfungsi')
                     echo 'checked'; ?>>
                 <label for="pedal_berfungsi">Berfungsi</label>
@@ -285,7 +307,7 @@ if (isset($_POST['submit'])) {
                 <label for="pedal_rusak">Rusak</label>
             </div>
             <div class="form-group">
-                <label for="kopling">Kopling:</label><br>
+                <label for="kopling">Pedal Kopling:</label><br>
                 <input type="radio" id="kopling_berfungsi" name="kopling" value="berfungsi" <?php if ($row['kopling'] === 'berfungsi')
                     echo 'checked'; ?>>
                 <label for="kopling_berfungsi">Berfungsi</label>
@@ -294,7 +316,7 @@ if (isset($_POST['submit'])) {
                 <label for="kopling_rusak">Rusak</label>
             </div>
             <div class="form-group">
-                <label for="gas_rem">Gas Rem:</label><br>
+                <label for="gas_rem">Pedal Rem:</label><br>
                 <input type="radio" id="gas_rem_berfungsi" name="gas_rem" value="berfungsi" <?php if ($row['gas_rem'] === 'berfungsi')
                     echo 'checked'; ?>>
                 <label for="gas_rem_berfungsi">Berfungsi</label>
@@ -325,38 +347,44 @@ if (isset($_POST['submit'])) {
                 <input type="radio" id="air_weaper_terisi" name="air_weaper" value="terisi" <?php if ($row['air_weaper'] === 'terisi')
                     echo 'checked'; ?>>
                 <label for="air_weaper_terisi">Terisi</label>
-                <input type="radio" id="air_weaper_kosong" name="air_weaper" value="kosong" <?php if ($row['air_weaper'] === 'kosong')
+                <input type="radio" id="air_weaper_tidak_terisi" name="air_weaper" value="tidak terisi" <?php if ($row['air_weaper'] === 'tidak terisi')
                     echo 'checked'; ?>>
-                <label for="air_weaper_kosong">Kosong</label>
+                <label for="air_weaper_tidak_terisi">Tidak Terisi</label>
             </div>
             <div class="form-group">
                 <label for="air_radiator">Air Radiator:</label><br>
                 <input type="radio" id="air_radiator_terisi" name="air_radiator" value="terisi" <?php if ($row['air_radiator'] === 'terisi')
                     echo 'checked'; ?>>
                 <label for="air_radiator_terisi">Terisi</label>
-                <input type="radio" id="air_radiator_kosong" name="air_radiator" value="kosong" <?php if ($row['air_radiator'] === 'kosong')
+                <input type="radio" id="air_radiator_tidak_terisi" name="air_radiator" value="kosong" <?php if ($row['air_radiator'] === 'kosong')
                     echo 'checked'; ?>>
-                <label for="air_radiator_kosong">Kosong</label>
+                <label for="air_radiator_tidak_terisi">Kosong</label>
             </div>
             <div class="form-group">
                 <label for="oli_mesin">Oli Mesin:</label><br>
                 <input type="radio" id="oli_mesin_terisi" name="oli_mesin" value="terisi" <?php if ($row['oli_mesin'] === 'terisi')
                     echo 'checked'; ?>>
                 <label for="oli_mesin_terisi">Terisi</label>
-                <input type="radio" id="oli_mesin_kosong" name="oli_mesin" value="kosong" <?php if ($row['oli_mesin'] === 'kosong')
+                <input type="radio" id="oli_mesin_tidak_terisi" name="oli_mesin" value="kosong" <?php if ($row['oli_mesin'] === 'kosong')
                     echo 'checked'; ?>>
-                <label for="oli_mesin_kosong">Kosong</label>
-            </div>
-            <div class="form-group">
-                <label for="note">Note:</label>
-                <textarea class="form-control" id="note" name="note"><?php echo $row['note']; ?></textarea>
+                <label for="oli_mesin_tidak_terisi">Kosong</label>
             </div>
             <div class="form-group">
                 <label for="foto">Foto:</label><br>
                 <img src="uploads/<?php echo $row['foto']; ?>" alt="Foto" width="200"><br>
                 <input type="file" class="form-control-file" id="foto" name="foto">
             </div>
-            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+            <div class="form-group">
+                <label for="foto2">Foto:</label><br>
+                <img src="uploads/<?php echo $row['foto2']; ?>" alt="Foto2" width="200"><br>
+                <input type="file" class="form-control-file" id="foto2" name="foto2">
+            </div>
+            <div class="form-group">
+                <label for="note">Note:</label>
+                <textarea class="form-control" id="note" name="note"><?php echo $row['note']; ?></textarea>
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='dashboard.php'">Cancel</button>
         </form>
     </div>
 </body>
