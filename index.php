@@ -131,10 +131,11 @@
             echo "<th>Total KM</th>";
             echo "<th>No Polisi</th>";
             echo "<th>Tipe Mobil</th>";
-            echo "<th>Status</th>";
+            //echo "<th>Status</th>";
             echo "<th>Foto KM Awal</th>";
             echo "<th>Foto KM Akhir</th>";
             echo "<th></th>"; // Kolom tambahan untuk tombol detail
+            echo "<th>Actions</th>"; // Kolom tambahan untuk tombol download
             echo "</tr>";
             echo "</thead>";
             echo "<tbody>";
@@ -150,12 +151,14 @@
                 echo "<td>" . $total_km . "</td>";
                 echo "<td>" . $row['no_polisi'] . "</td>";
                 echo "<td>" . $row['tipe_mobil'] . "</td>";
-                echo "<td>" . $row['status_lap'] . "</td>";
+                //echo "<td>" . $row['status_lap'] . "</td>";
                 echo "<td><a href='#' data-toggle='modal' data-target='#fotoModal' data-foto='uploads/" . $row['foto'] . "'><img src='uploads/" . $row['foto'] . "' width='100'></a></td>";
                 echo "<td><a href='#' data-toggle='modal' data-target='#fotoModal' data-foto='uploads/" . $row['foto2'] . "'><img src='uploads/" . $row['foto2'] . "' width='100'></a></td>";
+                echo "<td></td>"; // Kolom tambahan untuk tombol detail
+                echo "<td><a class='btn btn-success ml-1' href='download.php?id=" . $row['id'] . "'>Download</a></td>";
                 echo "</tr>"; // Tutup baris data saat ini
                 echo "<tr>"; // Baris baru untuk menu detail
-                echo "<td colspan='11'>"; // Menggabungkan sel menjadi 1 kolom
+                echo "<td colspan='12'>"; // Menggabungkan sel menjadi 1 kolom
                 echo "<details>";
                 echo "<summary><i class='fas fa-search'></i> Detail</summary>";
                 echo "<div class='details-content'>";
